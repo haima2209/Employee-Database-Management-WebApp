@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Management System</h1>
+        <a href="/employees" class="view-all-button">View All Employees</a>
+        <form action="/add" method="POST" class="form">
+            <input type="text" name="name" placeholder="Employee Name" required>
+            <input type="text" name="department" placeholder="Department" required>
+            <input type="number" name="salary" placeholder="Salary" required>
+            <button type="submit">Add Employee</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Salary</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emp in employees %}
+                <tr>
+                    <td>{{ emp[0] }}</td>
+                    <td>{{ emp[1] }}</td>
+                    <td>{{ emp[2] }}</td>
+                    <td>₹{{ emp[3] }}</td>
+                    <td>
+                        <a href="/delete/{{ emp[0] }}" class="delete-button">Delete</a>
+                        <form action="/increment/{{ emp[0] }}" method="POST" class="increment-form">
+                            <input type="number" name="increment" placeholder="Increment Amount" required>
+                            <button type="submit">Increment</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
